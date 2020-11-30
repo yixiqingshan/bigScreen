@@ -39,7 +39,7 @@
         </div>
         <div class="border_line">
           <p class="title">不良TOP10统计</p>
-          <dv-charts :option="option" />
+          <dv-charts :option="inferiorData" v-if="inferiorData.yAxis.data.length"/>
         </div>
       </div>
 
@@ -53,11 +53,17 @@
         </div>
         <div class="border_line">
           <p class="title">投入数</p>
-          <dv-charts :option="option3" />
+          <dv-charts
+            :option="investmentData"
+            v-if="investmentData.xAxis.data.length"
+          />
         </div>
         <div class="border_line">
           <p class="title">产出数</p>
-          <dv-charts :option="option3" />
+          <dv-charts
+            :option="produceData"
+            v-if="produceData.xAxis.data.length"
+          />
         </div>
         <div class="border_line">
           <p class="title">直通率</p>
@@ -110,20 +116,142 @@ export default {
   data() {
     return {
       time: new Date().toLocaleTimeString(),
-      option: {
+      investmentData: {
         grid: {
-          left: "10%",
-          top: "0%",
+          left: "12%",
+          top: "5%",
           right: "12%",
-          bottom: "15%",
+          bottom: "13%",
         },
-        color: ["#fff"],
         xAxis: {
-          name: "第一周",
+          name: "日期",
           nameTextStyle: {
             fill: "#fff",
             fontSize: 12,
           },
+          data: [],
+          axisLabel: {
+            style: {
+              fill: "#fff",
+            },
+          },
+          axisTick: {
+            style: {
+              stroke: "#fff",
+            },
+          },
+          axisLine: {
+            // show: false,
+            style: {
+              stroke: "#fff",
+            },
+          },
+        },
+        yAxis: {
+          data: "value",
+          axisLabel: {
+            style: {
+              fill: "#fff",
+            },
+          },
+          axisLine: {
+            show: true,
+            style: {
+              stroke: "#fff",
+            },
+          },
+          axisTick: {
+            style: {
+              stroke: "#fff",
+            },
+          },
+          splitLine: {
+            show: false,
+          },
+        },
+        series: [
+          {
+            data: [],
+            type: "bar",
+          },
+        ],
+      },
+      produceData: {
+        grid: {
+          left: "12%",
+          top: "5%",
+          right: "12%",
+          bottom: "13%",
+        },
+        xAxis: {
+          name: "日期",
+          nameTextStyle: {
+            fill: "#fff",
+            fontSize: 12,
+          },
+          data: [],
+          axisLabel: {
+            style: {
+              fill: "#fff",
+            },
+          },
+          axisTick: {
+            style: {
+              stroke: "#fff",
+            },
+          },
+          axisLine: {
+            // show: false,
+            style: {
+              stroke: "#fff",
+            },
+          },
+        },
+        yAxis: {
+          data: "value",
+          min: 0,
+          axisLabel: {
+            style: {
+              fill: "#fff",
+            },
+          },
+          axisLine: {
+            show: true,
+            style: {
+              stroke: "#fff",
+            },
+          },
+          axisTick: {
+            style: {
+              stroke: "#fff",
+            },
+          },
+          splitLine: {
+            show: false,
+          },
+        },
+        series: [
+          {
+            data: [],
+            type: "bar",
+          },
+        ],
+      },
+      inferiorData: {
+        grid: {
+          left: "12%",
+          top: "0%",
+          right: "12%",
+          bottom: "12%",
+        },
+        color: ["#fff"],
+        xAxis: {
+          name: "数量",
+          nameTextStyle: {
+            fill: "#fff",
+            fontSize: 12,
+          },
+          min:0,
           data: "value",
           axisLine: {
             show: false,
@@ -133,9 +261,14 @@ export default {
               fill: "#fff",
             },
           },
+          axisTick: {
+            style: {
+              stroke: "#fff",
+            },
+          },
         },
         yAxis: {
-          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+          data: [],
           axisLine: {
             style: {
               stroke: "#fff",
@@ -157,12 +290,65 @@ export default {
         },
         series: [
           {
-            data: [1200, 2230, 1900, 2100, 3500, 4200, 3985],
+            data: [],
             type: "bar",
             animationCurve: "easeOutBack",
           },
         ],
       },
+      // option: {
+      //   grid: {
+      //     left: "10%",
+      //     top: "0%",
+      //     right: "12%",
+      //     bottom: "15%",
+      //   },
+      //   color: ["#fff"],
+      //   xAxis: {
+      //     name: "第一周",
+      //     nameTextStyle: {
+      //       fill: "#fff",
+      //       fontSize: 12,
+      //     },
+      //     data: "value",
+      //     axisLine: {
+      //       show: false,
+      //     },
+      //     axisLabel: {
+      //       style: {
+      //         fill: "#fff",
+      //       },
+      //     },
+      //   },
+      //   yAxis: {
+      //     data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+      //     axisLine: {
+      //       style: {
+      //         stroke: "#fff",
+      //       },
+      //     },
+      //     axisTick: {
+      //       style: {
+      //         stroke: "#fff",
+      //       },
+      //     },
+      //     splitLine: {
+      //       show: false,
+      //     },
+      //     axisLabel: {
+      //       style: {
+      //         fill: "#fff",
+      //       },
+      //     },
+      //   },
+      //   series: [
+      //     {
+      //       data: [1200, 2230, 1900, 2100, 3500, 4200, 3985],
+      //       type: "bar",
+      //       animationCurve: "easeOutBack",
+      //     },
+      //   ],
+      // },
       option1: {
         grid: {
           left: "10%",
@@ -675,28 +861,62 @@ export default {
   },
   computed: {},
   watch: {},
-  methods: {
-    getData() {
-      this.$http({
-        method: "get",
-        url: "api",
-      })
-        .then((res) => {
-          //这里使用了ES6的语法
-          console.log(res); //请求成功返回的数据
-        })
-        .catch(
-          (error) => console.log(error) //请求失败返回的数据
-        );
-    },
+  created() {
+    this.getData();
   },
-  created() {},
   mounted() {
     let _this = this; // 声明一个变量指向Vue实例this，保证作用域一致
     this.timer = setInterval(() => {
       _this.time = new Date().toLocaleTimeString(); // 修改数据date
     }, 1000);
   },
+  methods: {
+    getData() {
+      this.$http
+        .get("/api/Sign/SelSign", {
+          headers: {
+            "Content-Type": "application/xml",
+          },
+        })
+        .then((res) => {
+          let arr = JSON.parse(res.data);
+          arr.forEach((el, idx) => {
+            if (idx < 7) {
+              this.investmentData.xAxis.data.push(this.getWeek(el.dayinfo));
+              this.investmentData.series[0].data.push(el.total);
+              this.produceData.xAxis.data.push(this.getWeek(el.dayinfo));
+              this.produceData.series[0].data.push(el.cmp);
+            }
+          });
+        })
+        this.$http
+        .get("/api/Sign/SelDefect")
+        .then((res) => {
+          let arr = JSON.parse(res.data);
+          console.log(arr)
+          // return
+          arr.sort(function(a, b){
+            return b.num - a.num
+          })
+          arr.forEach((el, idx) => {
+            if (idx < 10) {
+            this.inferiorData.yAxis.data.unshift(el.defect_name);
+            this.inferiorData.series[0].data.unshift(el.num);
+            }
+          })
+        })
+    },
+    getWeek(dateString) {
+      var dateArray = dateString.split("-");
+      let date = new Date(
+        dateArray[0],
+        parseInt(dateArray[1] - 1),
+        dateArray[2]
+      );
+      return "周" + "日一二三四五六".charAt(date.getDay());
+    },
+  },
+
   beforeDestroy() {
     if (this.timer) {
       clearInterval(this.timer); // 在Vue实例销毁前，清除我们的定时器
