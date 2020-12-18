@@ -5,11 +5,13 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import dataV from '@jiaminghi/data-view'
+// import echarts from "echarts";
 
 Vue.use(dataV)
 Vue.config.productionTip = false
-
-Vue.prototype.$http = axios
+// console.log(echarts)
+// Vue.prototype.$echarts = echarts;
+Vue.prototype.$http = axios;
 
 /* eslint-disable no-new */
 new Vue({

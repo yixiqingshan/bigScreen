@@ -19,17 +19,16 @@ html,body {
   overflow: hidden;
 }
 #app {
-  /* background-color: #02346e; */
-  background: url(../static/img/bg.png);
+  background-color: #00082e;
+  /* background: url(../static/img/bg.png) no-repeat; */
    width: 100%;
   height: 100%;
-  
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color:#fff;
-  /* margin-top: 60px; */
+  box-sizing: border-box;
 }
 p {
   margin: 0;

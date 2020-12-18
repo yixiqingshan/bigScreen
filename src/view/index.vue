@@ -5,17 +5,11 @@
     style="height: 100%; width: 100%; padding: 0px 10px; box-sizing: border-box"
   >
     <div class="header">
-      <div class="company">星源科技</div>
+      <div class="company"></div>
       中控看板
       <div class="tip">
-        <p style="padding-top: 30px">{{ time }}</p>
-        <!-- <div class="support">
-          技术支持：
-          <div class="merquee">
-            <span class="merquee-txt">芯港信息 邮箱：1797657868@qq.com</span>
-            <span class="merquee-txt">芯港信息 邮箱：1797657868@qq.com</span>
-          </div>
-        </div> -->
+        <p style="padding-top: 5vh">{{ time }}</p>
+        <p style="padding-top: 2vh">技术支持：上海芯港信息科技有限公司</p>
       </div>
     </div>
     <div class="content">
@@ -29,23 +23,62 @@
         </div>
         <div class="border_line">
           <p class="title">各个工序的良品与不良统计</p>
-          <dv-charts :option="statistics" v-if="statistics.yAxis.data.length"/>
+          <div
+            ref="statistics"
+            id="statistics"
+            style="width: 100%; height: 100%"
+          ></div>
         </div>
         <div class="pies border_line">
           <p class="title">各个工序的良品与不良占比</p>
-          <dv-charts :option="proportion1" v-if="proportion1.series[0].data.length"/>
-          <dv-charts :option="proportion2" v-if="proportion2.series[0].data.length"/>
-          <!-- <dv-charts :option="option2" /> -->
+
+          <div ref="proportion1" style="width: 50%; height: 100%"></div>
+          <div ref="proportion2" style="width: 50%; height: 100%"></div>
         </div>
         <div class="border_line">
           <p class="title">不良TOP10统计</p>
-          <dv-charts
-            :option="inferiorData"
-            v-if="inferiorData.yAxis.data.length"
-          />
+          <div ref="inferiorData" style="width: 100%; height: 100%"></div>
+        
         </div>
       </div>
-
+      <div class="center_box">
+        <div class="border_line">
+          <p class="title">每天产量及直通率</p>
+          <div class="data_top">
+            <div class="num_data">
+              <p>今日产量</p>
+              <span>{{ daYield }}</span>
+            </div>
+            <div class="num_data">
+              <p>昨日产量</p>
+              <span>{{ yesterday }}</span>
+            </div>
+            <div class="num_data">
+              <p>昨日良率</p>
+              <span>{{ yesterdaYield }}<span>%</span> </span>
+            </div>
+            <div class="charts_pie">
+              <div ref="daYieldData" style="width: 100%; height: 100%"></div>
+       
+            </div>
+            <div class="charts_pie">
+              <div
+                ref="dayPassRateData"
+                style="width: 100%; height: 100%"
+              ></div>
+    
+            </div>
+          </div>
+          <div class="charts_line">
+            <!-- <p>每天产量及直通率看板</p> -->
+            <div ref="dayData" style="width: 100%; height: 100%"></div>
+          </div>
+        </div>
+        <div class="border_line">
+          <p class="title">每天产量对比</p>
+          <div ref="yieldData" style="width: 100%; height: 100%"></div>
+        </div>
+      </div>
       <div class="right_box">
         <div class="border_line">
           <p class="title">报警记录</p>
@@ -56,64 +89,18 @@
         </div>
         <div class="border_line">
           <p class="title">投入数</p>
-          <dv-charts
-            :option="investmentData"
-            v-if="investmentData.xAxis.data.length"
-          />
+
+          <div ref="investmentData" style="width: 100%; height: 100%"></div>
         </div>
         <div class="border_line">
           <p class="title">产出数</p>
-          <dv-charts
-            :option="produceData"
-            v-if="produceData.xAxis.data.length"
-          />
+          <div ref="produceData" style="width: 100%; height: 100%"></div>
+   
         </div>
         <div class="border_line">
           <p class="title">直通率</p>
-          <dv-charts
-            :option="passRateData"
-            v-if="passRateData.xAxis.data.length"
-          />
-        </div>
-      </div>
-      <div class="center_box">
-        <div class="border_line" style="height: 74%; margin-bottom: 1%;padding-top: 20px">
-          <div class="data_top">
-            <div class="num_data">
-              <p>今日产量</p>
-              <!-- <dv-digital-flop
-                :config="numConfig"
-                style="width: 300px; height: 50px"
-                v-if="numConfig.number.length"
-              /> -->
-              <span>{{daYield}}</span>
-            </div>
-            <div class="num_data">
-              <p>昨日产量</p>
-              <span>{{ yesterday }}</span>
-            </div>
-            <div class="num_data">
-              <p>昨日良率</p>
-              <span>{{ yesterdaYield }}</span>
-            </div>
-            <div class="charts_pie">
-              <dv-charts
-                :option="daYieldData"
-                v-if="daYieldData.series[0].data.length"
-              />
-            </div>
-            <div class="charts_pie">
-              <dv-charts :option="dayPassRateData"  v-if="dayPassRateData.series[0].data.length"/>
-            </div>
-          </div>
-          <div class="charts_line">
-            <p>每天产量及直通率看板</p>
-            <dv-charts :option="dayData" v-if="dayData.xAxis.data.length" style="height: calc(100% - 24px)"/>
-          </div>
-        </div>
-        <div class="border_line" style="height: 24%; padding-top: 10px">
-          <p style="margin: 0;">每天产量对比</p>
-          <dv-charts :option="yieldData" v-if="yieldData.xAxis.data.length" style="height: calc(100% - 24px)"/>
+          <div ref="passRateData" style="width: 100%; height: 100%"></div>
+     
         </div>
       </div>
     </div>
@@ -121,336 +108,386 @@
 </template>
 
 <script>
-//例如：import 《组件名称》 from '《组件路径》';
-import Charts from "@jiaminghi/charts";
+// import echarts from 'echarts'
+
+var echarts = require("echarts");
 export default {
   components: {},
   data() {
     return {
       time: new Date().toLocaleTimeString(),
-      daYield:0,
+      daYield: 0,
       yesterday: 0,
       yesterdaYield: 0,
       investmentData: {
         grid: {
           left: "12%",
-          top: "15%",
-          right: "12%",
-          bottom: "13%",
+          top: "5%",
+          right: "5%",
+          bottom: "15%",
         },
         xAxis: {
-          name: "日期",
-          nameTextStyle: {
-            fill: "#fff",
-            fontSize: 12,
-          },
           data: [],
           axisLabel: {
-            style: {
-              fill: "#fff",
-            },
+            color: "#02b7d9",
           },
           axisTick: {
-            style: {
-              stroke: "#fff",
-            },
+            show: false,
           },
           axisLine: {
-            // show: false,
-            style: {
-              stroke: "#fff",
+            lineStyle: {
+              color: "#252d4d",
+            },
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#252d4d",
+              type: "dashed",
             },
           },
         },
         yAxis: {
-          name: "个",
-          nameGap: 8,
-          nameTextStyle: {
-            fill: "#fff",
-            fontSize: 12,
-          },
-          data: "value",
+          splitNumber: 3,
           axisLabel: {
-            style: {
-              fill: "#fff",
-            },
+            color: "#02b7d9",
+            fontSize: 12,
           },
           axisLine: {
             show: true,
-            style: {
-              stroke: "#fff",
+            lineStyle: {
+              color: "#252d4d",
+              type: "dashed",
             },
           },
           axisTick: {
-            style: {
-              stroke: "#fff",
-            },
+            show: false,
           },
           splitLine: {
-            show: false,
+            show: true,
+            lineStyle: {
+              color: "#252d4d",
+            },
           },
         },
         series: [
           {
             data: [],
             type: "bar",
+            barWidth: 12,
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                  {
+                    offset: 0,
+                    color: "rgba(0,215,163,0)",
+                  },
+                  {
+                    offset: 1,
+                    color: "rgb(0,215,163)",
+                  },
+                ]),
+                barBorderRadius: 10,
+              },
+            },
           },
         ],
       },
       produceData: {
         grid: {
           left: "12%",
-          top: "15%",
-          right: "12%",
-          bottom: "13%",
+          top: "5%",
+          right: "5%",
+          bottom: "15%",
         },
         xAxis: {
-          name: "日期",
-          nameTextStyle: {
-            fill: "#fff",
-            fontSize: 12,
-          },
           data: [],
           axisLabel: {
-            style: {
-              fill: "#fff",
-            },
+            color: "#02b7d9",
           },
           axisTick: {
-            style: {
-              stroke: "#fff",
-            },
+            show: false,
           },
           axisLine: {
-            // show: false,
-            style: {
-              stroke: "#fff",
+            lineStyle: {
+              color: "#252d4d",
+            },
+          },
+          splitLine: {
+            show: true,
+            lineStyle: {
+              color: "#252d4d",
+              type: "dashed",
             },
           },
         },
         yAxis: {
-          name: "个",
-          nameGap: 8,
-          nameTextStyle: {
-            fill: "#fff",
-            fontSize: 12,
-          },
-          data: "value",
-          min: 0,
+          splitNumber: 1,
           axisLabel: {
-            style: {
-              fill: "#fff",
-            },
+            color: "#02b7d9",
+            fontSize: 12,
           },
           axisLine: {
             show: true,
-            style: {
-              stroke: "#fff",
+            lineStyle: {
+              color: "#252d4d",
+              type: "dashed",
             },
           },
           axisTick: {
-            style: {
-              stroke: "#fff",
-            },
+            show: false,
           },
           splitLine: {
-            show: false,
+            show: true,
+            lineStyle: {
+              color: "#252d4d",
+            },
           },
         },
         series: [
           {
             data: [],
             type: "bar",
+            barWidth: 12,
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                  {
+                    offset: 0,
+                    color: "rgba(153,4,212,0)",
+                  },
+                  {
+                    offset: 1,
+                    color: "#9904d4",
+                  },
+                ]),
+                barBorderRadius: 10,
+              },
+            },
           },
         ],
       },
       inferiorData: {
         grid: {
-          left: "12%",
-          top: "0%",
-          right: "12%",
-          bottom: "12%",
+          left: "8%",
+          top: "8%",
+          right: "5%",
+          bottom: "15%",
         },
-        color: ["#fff"],
         xAxis: {
-          name: "数量",
-          nameTextStyle: {
-            fill: "#fff",
-            fontSize: 12,
-          },
-          min: 0,
-          data: "value",
+          // offset: 2,
+          type: "category",
+          color: "#021950",
           axisLine: {
             show: true,
-            style: {
-              stroke: "#fff",
-            },
-          },
-          axisTick: {
-            style: {
-              stroke: "#fff",
+            lineStyle: {
+              color: "#051f4f",
             },
           },
           axisLabel: {
-            style: {
-              fill: "#fff",
-            },
+            color: "#01c4f7",
+            fontSize: 10,
           },
-          
+          // splitLine: {
+          //   show: false
+          // },
+          axisTick: {
+            show: false,
+          },
+          // boundaryGap: true,
+          data: [],
         },
         yAxis: {
-          data: [],
-          axisLine: {
-            style: {
-              stroke: "#fff",
-            },
-          },
-          axisTick: {
-            style: {
-              stroke: "#fff",
-            },
-          },
+          type: "value",
+          min: 0,
+          splitNumber: 4,
           splitLine: {
             show: false,
           },
-          axisLabel: {
-            style: {
-              fill: "#fff",
+          axisLine: {
+            show: false,
+            lineStyle: {
+              color: "#051f4f",
             },
+          },
+          axisLabel: {
+            show: true,
+            // margin: 20,
+            textStyle: {
+              color: "#01c4f7",
+            },
+          },
+          axisTick: {
+            show: false,
           },
         },
         series: [
           {
             data: [],
             type: "bar",
-            animationCurve: "easeOutBack",
+            barWidth: 16,
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                  {
+                    offset: 0,
+                    color: "#035be8",
+                  },
+                  {
+                    offset: 1,
+                    color: "#6de3fe",
+                  },
+                ]),
+                barBorderRadius: 10,
+              },
+            },
           },
         ],
       },
       passRateData: {
         grid: {
           left: "12%",
-          top: "15%",
-          right: "12%",
-          bottom: "13%",
+          top: "10%",
+          right: "5%",
+          bottom: "15%",
         },
         xAxis: {
-          name: "日期",
-          nameTextStyle: {
-            fill: "#fff",
-            fontSize: 12,
-          },
-          data: [],
-          axisLabel: {
-            style: {
-              fill: "#fff",
-            },
-          },
-          axisTick: {
-            style: {
-              stroke: "#fff",
-            },
-          },
+          offset: 0,
+          type: "category",
+          color: "#021950",
           axisLine: {
-            // show: false,
-            style: {
-              stroke: "#fff",
+            show: true,
+            lineStyle: {
+              color: "#051f4f",
             },
           },
-        },
-        yAxis: {
-          name: "%",
-          nameGap: 10,
-          nameTextStyle: {
-            fill: "#fff",
-            fontSize: 12,
-          },
-          data: "value",
-          min: 0,
           axisLabel: {
-            style: {
-              fill: "#fff",
-            },
+            color: "#01c4f7",
+          },
+      
+          axisTick: {
+            show: false,
+          },
+          // boundaryGap: true,
+          data: [],
+        },
+
+        yAxis: {
+          
+          data: [],
+          maxInterval: 20,
+          type: "value",
+          min: 0,
+          splitLine: {
+            show: false,
           },
           axisLine: {
             show: true,
-            style: {
-              stroke: "#fff",
+            lineStyle: {
+              color: "#051f4f",
+            },
+          },
+          axisLabel: {
+            show: true,
+            // margin: 20,
+            formatter: "{value}%",
+            textStyle: {
+              color: "#01c4f7",
             },
           },
           axisTick: {
-            style: {
-              stroke: "#fff",
-            },
-          },
-          splitLine: {
             show: false,
           },
         },
         series: [
           {
+            name: "",
+            type: "line",
+            smooth: true, //是否平滑
+            showAllSymbol: true,
+            symbol: "none",
+            lineStyle: {
+              normal: {
+                width: 4,
+                color: {
+                  type: "linear",
+
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: "#a34eff", // 0% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: "#05c0e4", // 100% 处的颜色
+                    },
+                  ],
+                  globalCoord: false, // 缺省为 false
+                },
+                shadowColor: "rgba(72,216,191, 0.3)",
+                shadowBlur: 10,
+                shadowOffsetY: 20,
+              },
+            },
+
+            tooltip: {
+              show: true,
+            },
+
             data: [],
-            type: "bar",
           },
         ],
       },
       yieldData: {
         grid: {
-          left: "10%",
-          top: "15%",
+          left: "5%",
+          top: "8%",
           right: "5%",
           bottom: "15%",
         },
         xAxis: {
-          name: "日期",
-          nameTextStyle: {
-            fill: "#fff",
-            fontSize: 12,
-          },
-          data: [],
-          axisLabel: {
-            style: {
-              fill: "#fff",
-            },
-          },
-          axisTick: {
-            style: {
-              stroke: "#fff",
-            },
-          },
-          axisLine: {
-            // show: false,
-            style: {
-              stroke: "#fff",
-            },
-          },
-        },
-        yAxis: {
-          name: "个",
-          nameGap: 8,
-          nameTextStyle: {
-            fill: "#fff",
-            fontSize: 12,
-          },
-          min: 0,
-          data: "value",
-          axisLabel: {
-            style: {
-              fill: "#fff",
-            },
-          },
+          // offset: 2,
+          type: "category",
+          color: "#021950",
           axisLine: {
             show: true,
-            style: {
-              stroke: "#fff",
+            lineStyle: {
+              color: "#051f4f",
+            },
+          },
+          axisLabel: {
+            color: "#01c4f7",
+          },
+          // splitLine: {
+          //   show: false
+          // },
+          axisTick: {
+            show: false,
+          },
+          // boundaryGap: true,
+          data: [],
+        },
+        yAxis: {
+          type: "value",
+          min: 0,
+          splitNumber: 1,
+          splitLine: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+            lineStyle: {
+              color: "#051f4f",
+            },
+          },
+          axisLabel: {
+            show: true,
+            // margin: 20,
+            textStyle: {
+              color: "#01c4f7",
             },
           },
           axisTick: {
-            style: {
-              stroke: "#fff",
-            },
-          },
-          splitLine: {
             show: false,
           },
         },
@@ -458,145 +495,283 @@ export default {
           {
             data: [],
             type: "bar",
+            barWidth: 16,
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                  {
+                    offset: 0,
+                    color: "#55c9a6",
+                  },
+                  {
+                    offset: 1,
+                    color: "#e1ce66",
+                  },
+                ]),
+                barBorderRadius: [5, 5, 5, 5],
+              },
+            },
           },
         ],
       },
       dayData: {
         grid: {
-          left: "10%",
+          left: "7%",
           top: "10%",
           right: "5%",
-          bottom: "10%",
+          bottom: "15%",
+        },
+        xAxis: {
+          offset: 10,
+          type: "category",
+          color: "#021950",
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: "#051f4f",
+            },
+          },
+          axisLabel: {
+            color: "#01c4f7",
+          },
+          // splitLine: {
+          //   show: false
+          // },
+          axisTick: {
+            show: false,
+          },
+          // boundaryGap: true,
+          data: [],
         },
 
-        xAxis: {
-          data: [],
-          axisLabel: {
-            style: {
-              fill: "#fff",
-            },
-          },
-          axisTick: {
-            style: {
-              stroke: "#fff",
-            },
-          },
-          axisLine: {
-            // show: false,
-            style: {
-              stroke: "#fff",
-            },
-          },
-        },
         yAxis: {
-          name: "产量",
+          name: "直通率",
           nameTextStyle: {
-            fill: "#fff",
-            fontSize: 12,
+            color: "#01c4f7",
           },
-          data: "value",
-          axisLabel: {
-            style: {
-              fill: "#fff",
-            },
+          type: "value",
+          min: 0,
+          formatter: "{value}%",
+          splitLine: {
+            show: false,
           },
           axisLine: {
             show: true,
-            style: {
-              stroke: "#fff",
+            lineStyle: {
+              color: "#051f4f",
+            },
+          },
+          axisLabel: {
+            show: true,
+            // margin: 20,
+            formatter: "{value}%",
+            textStyle: {
+              color: "#01c4f7",
             },
           },
           axisTick: {
-            style: {
-              stroke: "#fff",
-            },
-          },
-          splitLine: {
             show: false,
           },
         },
         series: [
           {
-            data: [],
+            name: "",
             type: "line",
-            lineArea: {
+            smooth: true, //是否平滑
+            showAllSymbol: true,
+            symbol: "circle",
+            symbolSize: 5,
+            lineStyle: {
+              normal: {
+                color: "#febb2a",
+              },
+            },
+            itemStyle: {
+              color: "#febb2a",
+              borderColor: "#febb2a",
+              borderWidth: 1,
+            },
+            tooltip: {
               show: true,
             },
+            areaStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: "rgba(254,187,42,.3)",
+                    },
+                    {
+                      offset: 0.7,
+                      color: "rgba(254,187,42,0)",
+                    },
+                  ],
+                  false
+                ),
+                shadowColor: "rgba(195,230,255,0.1)",
+                shadowBlur: 20,
+              },
+            },
+            data: [],
           },
         ],
       },
       daYieldData: {
+        title: [
+          {
+            text: "直通率",
+            textAlign: "auto",
+            left: 10,
+            bottom: "-2%",
+            textStyle: {
+              color: "#fff",
+              fontWeight: 400,
+              fontSize: 15,
+            },
+          },
+          {
+            text: "30%",
+            x: "center",
+            top: "30%",
+            textStyle: {
+              color: "#fff",
+              fontSize: 12,
+              fontWeight: "100",
+            },
+          },
+        ],
         grid: {
-          left: "10%",
-          top: "10%",
+          left: "5%",
           right: "5%",
-          bottom: "0%",
+        },
+        polar: {
+          radius: ["55%", "68%"],
+          center: ["50%", "40%"],
+        },
+        angleAxis: {
+          max: 100,
+          show: false,
+        },
+        radiusAxis: {
+          type: "category",
+          show: true,
+          axisLabel: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
         },
         series: [
           {
-            type: "gauge",
-            startAngle: -Math.PI / 2,
-            endAngle: Math.PI * 1.5,
-            arcLineWidth: 15,
-            radius: "70%",
-            data: [],
-            axisLabel: {
-              show: false,
+            name: "",
+            type: "bar",
+            roundCap: true,
+            barWidth: 60,
+            showBackground: true,
+            backgroundStyle: {
+              color: "rgba(66, 66, 66, .3)",
             },
-            axisTick: {
-              show: false,
-            },
-            pointer: {
-              show: false,
-            },
-            dataItemStyle: {
-              lineCap: "round",
-            },
-            details: {
-              show: true,
-              formatter: "直通率{value}%",
-              style: {
-                fill: "#1ed3e5",
-                fontSize: 12,
+            data: [80],
+            coordinateSystem: "polar",
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                  {
+                    offset: 0,
+                    color: "#7de3f6",
+                  },
+                  {
+                    offset: 1,
+                    color: "#7de3f6",
+                  },
+                ]),
               },
             },
           },
         ],
       },
       dayPassRateData: {
+        title: [
+          {
+            text: "良品率",
+            textAlign: "auto",
+            left: 10,
+            bottom: "-2%",
+            textStyle: {
+              color: "#fff",
+              fontWeight: 400,
+              fontSize: 15,
+            },
+          },
+          {
+            text: "30%",
+            x: "center",
+            top: "30%",
+            textStyle: {
+              color: "#fff",
+              fontSize: 12,
+              fontWeight: "100",
+            },
+          },
+        ],
         grid: {
-          left: "10%",
-          top: "10%",
+          left: "5%",
           right: "5%",
-          bottom: "5%",
+        },
+        polar: {
+          radius: ["55%", "68%"],
+          center: ["50%", "40%"],
+        },
+        angleAxis: {
+          max: 100,
+          show: false,
+        },
+        radiusAxis: {
+          type: "category",
+          show: true,
+          axisLabel: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
+          },
         },
         series: [
           {
-            type: "gauge",
-            startAngle: -Math.PI / 2,
-            endAngle: Math.PI * 1.5,
-            arcLineWidth: 15,
-            radius: "70%",
-            data: [
-            ],
-            axisLabel: {
-              show: false,
+            name: "",
+            type: "bar",
+            roundCap: true,
+            barWidth: 60,
+            showBackground: true,
+            backgroundStyle: {
+              color: "rgba(66, 66, 66, .3)",
             },
-            axisTick: {
-              show: false,
-            },
-            pointer: {
-              show: false,
-            },
-            dataItemStyle: {
-              lineCap: "round",
-            },
-            details: {
-              show: true,
-              formatter: "良品率{value}%",
-              style: {
-                fill: "#1ed3e5",
-                fontSize: 12,
+            data: [80],
+            coordinateSystem: "polar",
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                  {
+                    offset: 0,
+                    color: "#8a3cc1",
+                  },
+                  {
+                    offset: 1,
+                    color: "#bf37ff",
+                  },
+                ]),
               },
             },
           },
@@ -608,44 +783,74 @@ export default {
           top: "28",
           right: "5%",
         },
-        title: {
-          text: "QC1",
-          style: {
-            fill: "#fff",
+        title: [
+          {
+            text: "",
+            textAlign: "auto",
+            left: 60,
+            textStyle: {
+              color: "#02c2e6",
+              fontWeight: 400,
+              fontSize: 15,
+            },
+          },
+          {
+            text: "30%",
+            x: "center",
+            top: "52%",
+            textStyle: {
+              color: "#02c2e6",
+              fontSize: 12,
+              fontWeight: "100",
+            },
+          },
+        ],
+        polar: {
+          radius: ["44%", "50%"],
+          center: ["50%", "60%"],
+        },
+        angleAxis: {
+          max: 100,
+          show: false,
+        },
+        radiusAxis: {
+          type: "category",
+          show: true,
+          axisLabel: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
           },
         },
         series: [
           {
-            type: "gauge",
-            startAngle: -Math.PI / 2,
-            endAngle: Math.PI * 1.5,
-            arcLineWidth: 10,
-            center: ["50%", "60%"],
-            data: [
-              // {
-              //   name: "itemA",
-              //   value: 20,
-              //   gradient: ["#03c2fd", "#1ed3e5", "#2fded6"],
-              // },
-            ],
-            axisLabel: {
-              show: false,
+            name: "",
+            type: "bar",
+            roundCap: true,
+            barWidth: 60,
+            showBackground: true,
+            backgroundStyle: {
+              color: "rgba(66, 66, 66, .3)",
             },
-            axisTick: {
-              show: false,
-            },
-            pointer: {
-              show: false,
-            },
-            dataItemStyle: {
-              lineCap: "round",
-            },
-            details: {
-              show: true,
-              formatter: "{value}%",
-              style: {
-                fill: "#1ed3e5",
-                fontSize: 18,
+            data: [80],
+            coordinateSystem: "polar",
+
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                  {
+                    offset: 0,
+                    color: "#449EFF",
+                  },
+                  {
+                    offset: 1,
+                    color: "#60DAFF",
+                  },
+                ]),
               },
             },
           },
@@ -657,44 +862,74 @@ export default {
           top: "28",
           right: "5%",
         },
-        title: {
-          text: "QC1",
-          style: {
-            fill: "#fff",
+        title: [
+          {
+            text: "",
+            textAlign: "auto",
+            left: 60,
+            textStyle: {
+              color: "#02c2e6",
+              fontWeight: 400,
+              fontSize: 15,
+            },
+          },
+          {
+            text: "30%",
+            x: "center",
+            top: "52%",
+            textStyle: {
+              color: "#02c2e6",
+              fontSize: 12,
+              fontWeight: "100",
+            },
+          },
+        ],
+        polar: {
+          radius: ["44%", "50%"],
+          center: ["50%", "60%"],
+        },
+        angleAxis: {
+          max: 100,
+          show: false,
+        },
+        radiusAxis: {
+          type: "category",
+          show: true,
+          axisLabel: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          },
+          axisTick: {
+            show: false,
           },
         },
         series: [
           {
-            type: "gauge",
-            startAngle: -Math.PI / 2,
-            endAngle: Math.PI * 1.5,
-            arcLineWidth: 10,
-            center: ["50%", "60%"],
-            data: [
-              // {
-              //   name: "itemA",
-              //   value: 20,
-              //   gradient: ["#03c2fd", "#1ed3e5", "#2fded6"],
-              // },
-            ],
-            axisLabel: {
-              show: false,
+            name: "",
+            type: "bar",
+            roundCap: true,
+            barWidth: 60,
+            showBackground: true,
+            backgroundStyle: {
+              color: "rgba(66, 66, 66, .3)",
             },
-            axisTick: {
-              show: false,
-            },
-            pointer: {
-              show: false,
-            },
-            dataItemStyle: {
-              lineCap: "round",
-            },
-            details: {
-              show: true,
-              formatter: "{value}%",
-              style: {
-                fill: "#1ed3e5",
-                fontSize: 18,
+            data: [80],
+            coordinateSystem: "polar",
+
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+                  {
+                    offset: 0,
+                    color: "#449EFF",
+                  },
+                  {
+                    offset: 1,
+                    color: "#60DAFF",
+                  },
+                ]),
               },
             },
           },
@@ -702,92 +937,116 @@ export default {
       },
       statistics: {
         grid: {
-          left: "12%",
+          left: "15%",
           top: "0%",
-          right: "22%",
+          right: "15%",
           bottom: "20%",
         },
         legend: {
-          top: 12,
-          show: true,
-          data:[{name: "全部",color: ""},{name: "良品",color: ""},{name: "不良",color: "rgba(255,0,0,.6)"}],
+          top: 1,
+          right: 0,
+          data: ["全部", "良品", "不良"],
           textStyle: {
-            fill: '#fff'
+            color: "#fff",
+            fontSize: 9,
           },
-          orient:"vertical"
+          itemWidth: 13,
+          itemHeight: 6,
+          orient: "vertical",
         },
         color: ["#fff"],
         xAxis: {
-          min: 0,
+          type: "value",
           name: "数量",
           nameTextStyle: {
-            fill: "#fff",
-            fontSize: 12,
-          },
-          data: "value",
-          axisLine: {
-            show: true,
-            style: {
-              stroke: "#fff",
-            },
-          },
-          axisTick: {
-            style: {
-              stroke: "#fff",
-            },
+            color: "#01c4f7",
           },
           axisLabel: {
-            style: {
-              fill: "#fff",
+            formatter: "{value}",
+          },
+          axisLine: {
+            color: "#020a30",
+            show: true,
+          },
+          axisLabel: {
+            color: "#01c4f7",
+          },
+          splitLine: {
+            lineStyle: {
+              color: "#161e40",
+              type: "dashed",
             },
           },
         },
         yAxis: {
           data: [],
-          axisLine: {
-            style: {
-              stroke: "#fff",
-            },
+          axisLabel: {
+            color: "#01c4f7",
           },
           axisTick: {
-            style: {
-              stroke: "#fff",
-            },
-          },
-          splitLine: {
             show: false,
           },
-          axisLabel: {
-            style: {
-              fill: "#fff",
-            },
+          axisLine: {
+            color: "#161e40",
           },
+          inverse: true,
+          type: "category",
         },
         series: [
           {
-            barStyle: {
-              fill: 'rgba(255,0,0,.6)',
-              barBorderRadius: 51,
+            barGap: 1.5,
+            barWidth: "6",
+            data: [],
+            type: "bar",
+            name: "全部",
+            itemStyle: {
+              barBorderRadius: [5, 5, 5, 5],
+              color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                { offset: 0, color: "#047bd7" },
+                { offset: 1, color: "#01d5fc" },
+              ]),
             },
-            data: [],
-            type: "bar",
-            name: "不良"
           },
           {
+            barGap: 1.5,
+            barWidth: "6",
             data: [],
             type: "bar",
-            name: "良品"
+            name: "良品",
+            itemStyle: {
+              barBorderRadius: [5, 5, 5, 5],
+              color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                { offset: 0, color: "#0bd7a6" },
+                { offset: 1, color: "#83fbf0" },
+              ]),
+            },
           },
           {
+            barGap: 1.5,
+            barWidth: "6",
             data: [],
             type: "bar",
-            name: "全部"
+            name: "不良",
+            itemStyle: {
+              barBorderRadius: [5, 5, 5, 5],
+              color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                { offset: 0, color: "#d7960b" },
+                { offset: 1, color: "#fdc977" },
+              ]),
+            },
           },
         ],
       },
-      
       tableConfig: {
-        header: ["巡查内容", "列2"],
+        headerHeight: 28,
+        headerBGC: "#021950",
+        oddRowBGC: "#021950",
+        evenRowBGC: "transparent",
+        rowNum: 3,
+        header: [
+          '<span style="color:#01c4f7;">巡查内容</span>',
+          '<span style="color:#01c4f7;">列</span>',
+        ],
         data: [
           ["内容1", "寻常类答复"],
           ["内容2", "寻常类答复"],
@@ -801,19 +1060,12 @@ export default {
         ],
       },
       tableConfig1: {
+        oddRowBGC: "#021950",
+        evenRowBGC: "transparent",
         data: [
-          ["良率预警  94%"],
+          ['<span style="color:#01c4f7;">良率预警  94%</span>'],
           ["WIP等待预警超过15天"],
-        
         ],
-      },
-      numConfig: {
-        number: [],
-        content: "{nt} {nt} {nt} {nt}",
-        style: {
-          fontSize: 50,
-          fill: "#3de7c9",
-        },
       },
     };
   },
@@ -825,14 +1077,14 @@ export default {
   mounted() {
     let _this = this; // 声明一个变量指向Vue实例this，保证作用域一致
     this.timer = setInterval(() => {
-      _this.time = new Date().toLocaleTimeString(); // 修改数据date
+      _this.time =
+        new Date().toLocaleDateString() + new Date().toLocaleTimeString(); // 修改数据date
     }, 1000);
   },
   methods: {
     getData() {
       this.$http.get("/api/Sign/SelSign").then((res) => {
         let arr = JSON.parse(res.data);
-        
         arr.forEach((el, idx) => {
           if (idx < 7) {
             this.investmentData.xAxis.data.push(this.getWeek(el.dayinfo));
@@ -845,6 +1097,14 @@ export default {
             this.yieldData.series[0].data.push(el.cmp);
           }
         });
+        this.$nextTick(() => {
+          let yieldData = echarts.init(this.$refs.yieldData);
+          yieldData.setOption(this.yieldData);
+          let investmentData = echarts.init(this.$refs.investmentData);
+          investmentData.setOption(this.investmentData);
+          let produceData = echarts.init(this.$refs.produceData);
+          produceData.setOption(this.produceData);
+        });
       });
       this.$http.get("/api/Sign/SelDefect").then((res) => {
         let arr = JSON.parse(res.data);
@@ -852,10 +1112,15 @@ export default {
           return b.num - a.num;
         });
         arr.forEach((el, idx) => {
-          if (idx < 10) {
-            this.inferiorData.yAxis.data.unshift(el.defect_name);
-            this.inferiorData.series[0].data.unshift(el.num);
+          if (idx < 5) {
+            this.inferiorData.xAxis.data.push(el.defect_name);
+            this.inferiorData.series[0].data.push(el.num);
           }
+        });
+        this.$nextTick(() => {
+          let inferiorData = echarts.init(this.$refs.inferiorData);
+          inferiorData.setOption(this.inferiorData);
+          
         });
       });
       this.$http.get("/api/Sign/SelTodayInfo").then((res) => {
@@ -866,31 +1131,42 @@ export default {
         this.daYield = arr.ToDaySign;
         this.yesterday = arr.TomorrowSign;
         this.yesterdaYield = arr.TomorrowYiledRate;
-        this.daYieldData.series[0].data.push({
-          name: "itemA",
-          value: Math.round(arr.ToDayPassRate * 100),
-          gradient: ["#03c2fd", "#1ed3e5", "#2fded6"],
-        });
-        this.dayPassRateData.series[0].data.push({
-          name: "itemA",
-          value: Math.round(arr.ToDayYiledRate* 100),
-          gradient: ["#03c2fd", "#1ed3e5", "#2fded6"],
+        
+        this.daYieldData.title[1].text =
+          Math.round(arr.ToDayPassRate * 100) + "%";
+        this.daYieldData.series[0].data = [Math.round(arr.ToDayPassRate * 100)];
+        this.dayPassRateData.title[1].text =
+          Math.round(arr.ToDayYiledRate * 100) + "%";
+        this.dayPassRateData.series[0].data = [
+          Math.round(arr.ToDayYiledRate * 100),
+        ];
+        this.$nextTick(() => {
+          let dayPassRateData = echarts.init(this.$refs.dayPassRateData);
+          dayPassRateData.setOption(this.dayPassRateData);
+          let daYieldData = echarts.init(this.$refs.daYieldData);
+          daYieldData.setOption(this.daYieldData);
         });
       });
       this.$http.get("/api/Sign/SelDefectRateByGroup").then((res) => {
         let arr = JSON.parse(res.data);
         console.log("SelDefectRateByGroup", arr);
-        this.proportion1.title.text = arr[0].DefecGrouptName
-        this.proportion1.series[0].data.push({
-          name: "item",
-          value: arr[0].Rate ? Math.round(arr[0].Rate * 100) : 0,
-          gradient: ["#03c2fd", "#1ed3e5", "#2fded6"],
-        });
-        this.proportion2.title.text = arr[1].DefecGrouptName
-        this.proportion2.series[0].data.push({
-          name: "item",
-          value: arr[1].Rate ? Math.round(arr[1].Rate * 100) : 0,
-          gradient: ["#03c2fd", "#1ed3e5", "#2fded6"],
+        this.proportion1.title[0].text = arr[0].DefecGrouptName;
+        this.proportion1.title[1].text =
+          (arr[0].Rate ? Math.round(arr[0].Rate * 100) : 0) + "%";
+        this.proportion1.series[0].data = [
+          arr[0].Rate ? Math.round(arr[0].Rate * 100) : 0,
+        ];
+        this.proportion2.title[0].text = arr[1].DefecGrouptName;
+        this.proportion2.title[1].text =
+          (arr[1].Rate ? Math.round(arr[1].Rate * 100) : 0) + "%";
+        this.proportion2.series[0].data = [
+          arr[1].Rate ? Math.round(arr[1].Rate * 100) : 0,
+        ];
+        this.$nextTick(() => {
+          let myChart1 = echarts.init(this.$refs.proportion1);
+          myChart1.setOption(this.proportion1);
+          let myChart2 = echarts.init(this.$refs.proportion2);
+          myChart2.setOption(this.proportion2);
         });
       });
       this.$http.get("/api/Sign/SelDefectByGroup").then((res) => {
@@ -898,17 +1174,18 @@ export default {
         // return
         console.log("SelDefectByGroup", arr);
         arr.forEach((el, idx) => {
-            this.statistics.yAxis.data.push(el.DEFECT_GROUP_NAME);
-            this.statistics.series[2].data.push(el.total);
-            this.statistics.series[1].data.push(el.total - el.cmp);
-            this.statistics.series[0].data.push(el.cmp);
+          this.statistics.yAxis.data.push(el.DEFECT_GROUP_NAME);
+          this.statistics.series[0].data.push(el.total);
+          this.statistics.series[1].data.push(el.total - el.cmp);
+          this.statistics.series[2].data.push(el.cmp);
         });
-        console.log(this.statistics,"this.statistics")
+        this.$nextTick(() => {
+          let myChart = echarts.init(document.getElementById("statistics"));
+          myChart.setOption(this.statistics);
+        });
       });
       this.$http.get("/api/Sign/SelYieldRate").then((res) => {
         let arr = JSON.parse(res.data);
-        
-        // this.yesterdaYield = arr[1].Rate ? Math.round(arr[1].Rate * 100) : 0
         arr.forEach((el, idx) => {
           if (idx < 14) {
             this.dayData.xAxis.data.push(this.getWeek(el.DayInfo));
@@ -917,11 +1194,15 @@ export default {
             );
           }
         });
+        this.$nextTick(() => {
+          let dayData = echarts.init(this.$refs.dayData);
+          dayData.setOption(this.dayData);
+        });
       });
       this.$http.get("/api/Sign/SelPassRate").then((res) => {
         let arr = JSON.parse(res.data);
         console.log(arr, "SelPassRate");
-     
+
         arr.forEach((el, idx) => {
           if (idx < 7) {
             this.passRateData.xAxis.data.push(this.getWeek(el.DayInfo));
@@ -929,6 +1210,10 @@ export default {
               el.Rate ? Math.round(el.Rate * 100) : 0
             );
           }
+        });
+        this.$nextTick(() => {
+          let passRateData = echarts.init(this.$refs.passRateData);
+          passRateData.setOption(this.passRateData);
         });
       });
     },
@@ -959,103 +1244,113 @@ export default {
 <style  scoped>
 .home-index {
   height: 100% !important;
+  padding: 1vh 2vw 1.8vh !important;
 }
 .header {
-  height: 60px;
+  height: 12vh;
   width: 100%;
-  font-size: 40px;
+  font-size: 3.2rem;
+  letter-spacing: 10px;
   text-align: center;
-  line-height: 60px;
+  font-weight: 600;
+  line-height: 10vh;
+  background: url(../../static/img/toubu.png) no-repeat 50% 0%;
+
+  color: #01c4f7;
 }
 .company {
-  float: left;
-  line-height: 60px;
-  font-size: 32px;
-  color: rgb(0, 206, 255);
+  width: 4.8vw;
+  height: 7.8vh;
+  position: absolute;
+  background: url(../../static/img/logo.png) no-repeat;
+  background-size: 100% 100%;
+  left: 1.5vw;
 }
 .header .tip {
-  float: right;
-  font-size: 14px;
-  line-height: 28px;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  line-height: 1vh;
+  position: absolute;
+  right: 2vw;
+  top: 0;
 }
 .header .tip p {
   text-align: right;
-}
-.merquee {
-  height: 28px;
-  line-height: 28px;
-  box-sizing: border-box;
-  word-break: break-all;
-  white-space: nowrap;
-  overflow: hidden;
-  float: right;
-  width: 200px;
-}
-.merquee .merquee-txt {
-  display: inline-block;
-  padding-left: 0%; /* 从右至左开始滚动 */
-  animation: marqueeTransform 5s linear infinite;
-}
-@keyframes marqueeTransform {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(-100%, 0);
-  }
+  color: #fff;
+  margin: 0;
 }
 .content {
-  height: 92%;
+  height: 85vh;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 .left_box {
   float: left;
-  width: 27%;
-  margin-right: 1%;
+  width: 22vw;
   height: 100%;
-}
-.border_line {
-  padding: 20px;
-  padding-top: 50px;
-  height: 24%;
-  width: 100%;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-  background-color: #0c2a35 !important;
-  border-radius: 6px;
-  position: relative;
-}
-.border_line .title {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 .center_box {
-  /* float: left; */
-  width: 51%;
-  padding: 0 21% 0 28%;
+  width: 49vw;
   height: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.right_box {
+  width: 22vw;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 .center_box .data_top {
   height: 25%;
-  padding: 10px 30px;
+  padding: 2.4vh 2vw;
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 .num_data {
-  float: left;
-  font-size: 30px;
-  width: 22%;
+  font-size: 1rem;
+  width: 5vw;
+  border: 1px solid #1a3f81;
+  border-radius: 0.5rem;
+  color: #01c4f7;
+  box-shadow: 0px 0px 30px #041d52 inset;
+  padding: 1vh 0 1vh 5vw;
+  text-align: left;
+  position: relative;
+}
+.num_data::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 10%;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid #173b7b;
+  border-radius: 50%;
+  background: url(../../static/img/icon.png) no-repeat 50% 50%;
+  background-size: 50% 50%;
+}
+.num_data p {
+  margin-bottom: 0.3vh;
+}
+.num_data > span {
+  font-size: 2rem;
+  color: #fff;
   font-weight: 500;
 }
-.num_data p{
-  margin-bottom: 40px !important;
-}
-.num_data span {
-  font-size: 36px;
-  color: #3de7c9;
-  font-weight: 500;
+.num_data > span > span {
+  font-size: 1rem;
 }
 .yesterday_data {
   float: left;
@@ -1066,13 +1361,10 @@ export default {
   margin-bottom: 36px;
   margin-top: 35px;
 }
-.num_data p {
-  margin: 20px 10px;
-  font-size: 28px;
-}
+
 .charts_pie {
   float: left;
-  width: 16%;
+  width: 4vw;
   height: 100%;
 }
 .center_box .charts_line {
@@ -1081,10 +1373,34 @@ export default {
 .center_box .charts_line p {
   margin-bottom: 0px !important;
 }
-.right_box {
-  float: right;
-  margin-left: 1%;
-  width: 20%;
-  height: 100%;
+
+.border_line {
+  padding: 20px;
+  padding-top: 45px;
+  box-sizing: border-box;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 19vh;
+  background: url(../../static/img/box2.png) no-repeat;
+  background-size: 100% 100%;
+}
+
+.center_box .border_line:first-child {
+  background: url(../../static/img/box.png) no-repeat;
+  background-size: 100% 100%;
+  height: 63.5vh;
+  padding-top: 45px;
+}
+.center_box .border_line:last-child {
+  background: url(../../static/img/box1.png) no-repeat;
+  background-size: 100% 100%;
+  height: 19vh;
+  padding-top: 45px;
+}
+.border_line .title {
+  position: absolute;
+  top: 10px;
+  left: 15px;
 }
 </style>
