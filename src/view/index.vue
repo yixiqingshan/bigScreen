@@ -36,7 +36,7 @@
           <div ref="proportion2" style="width: 50%; height: 100%"></div>
         </div>
         <div class="border_line">
-          <p class="title">不良TOP10统计</p>
+          <p class="title">不良TOP5统计</p>
           <div ref="inferiorData" style="width: 100%; height: 100%"></div>
         
         </div>
@@ -84,6 +84,7 @@
           <p class="title">报警记录</p>
           <dv-scroll-board
             :config="tableConfig1"
+            v-if='tableConfig1.data.length'
             style="width: 100%; height: 100%"
           />
         </div>
@@ -545,7 +546,7 @@ export default {
         },
 
         yAxis: {
-          name: "直通率",
+          name: "良率",
           nameTextStyle: {
             color: "#01c4f7",
           },
@@ -1063,14 +1064,13 @@ export default {
         oddRowBGC: "#021950",
         evenRowBGC: "transparent",
         data: [
-          ['<span style="color:#01c4f7;">良率预警  94%</span>'],
-          ["WIP等待预警超过15天"],
+          // ['<span style="color:#01c4f7;">良率预警  94%</span>'],
+          // ["WIP等待预警超过15天"],
         ],
       },
     };
   },
-  computed: {},
-  watch: {},
+  inject:['reload'],
   created() {
     this.getData();
   },
@@ -1080,9 +1080,33 @@ export default {
       _this.time =
         new Date().toLocaleDateString() + new Date().toLocaleTimeString(); // 修改数据date
     }, 1000);
+    this.timer1 = setInterval(() => {
+      this.reload()
+      // this.getData()
+    }, 600000);
   },
   methods: {
     getData() {
+      // Sign/WIPWarning
+      this.$http.get("/api/Sign/WIPWarning").then((res) => {
+        let obj = JSON.parse(res.data);
+        // console.log(obj,"WIPWarning")
+        if(obj || obj.length) {
+          obj.forEach((item,idx)=>{
+            
+            if(!(idx%2 ===0)) {
+              // let str = obj[idx].Column1.slice(3)
+              obj[idx].Column1 = '<span style="color:#01c4f7;">'+obj[idx].Column1 + '</span>'
+            }else {
+              // obj[idx].Column1 = obj[idx].Column1.slice(3)
+            }
+            this.tableConfig1.data.push([obj[idx].Column1])
+          })
+        }
+        console.log(this.tableConfig1.data,"WIPWarning")
+        // this.tableConfig1.data = [obj]
+        // console.log(this.tableConfig1,"this.tableConfig1")
+      });
       this.$http.get("/api/Sign/SelSign").then((res) => {
         let arr = JSON.parse(res.data);
         arr.forEach((el, idx) => {
@@ -1130,7 +1154,7 @@ export default {
         // this.
         this.daYield = arr.ToDaySign;
         this.yesterday = arr.TomorrowSign;
-        this.yesterdaYield = arr.TomorrowYiledRate;
+        this.yesterdaYield = Math.round(arr.TomorrowYiledRate * 100);
         
         this.daYieldData.title[1].text =
           Math.round(arr.ToDayPassRate * 100) + "%";
@@ -1202,7 +1226,7 @@ export default {
       this.$http.get("/api/Sign/SelPassRate").then((res) => {
         let arr = JSON.parse(res.data);
         console.log(arr, "SelPassRate");
-
+        // if(arr)
         arr.forEach((el, idx) => {
           if (idx < 7) {
             this.passRateData.xAxis.data.push(this.getWeek(el.DayInfo));
